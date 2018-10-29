@@ -17,13 +17,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 	return $request->user();
 });
 
-Route::middleware('auth:api')->get('/', function (Request $request) {
+
+
+Route::middleware(['jwt.auth'])->group( function () {
 	Route::post('soldaduras','Pellizary\SoldaduraController@store')->name('agregarsoldaduras');
-
-
-
-
+	Route::get('soldaduras','Pellizary\SoldaduraController@getsol')->name('consultasoldaduras');
 });
+
+//Route::get('soldaduras','Pellizary\SoldaduraController@getsol')->name('consultasoldaduras');
+
 //ruta para identificar si el front tiene conexion con la api
 Route::get('/test', function (){
     return response()->json([
@@ -31,9 +33,13 @@ Route::get('/test', function (){
     ], 200);
 });
 
+Route::post('login','Configuracion\AuthenticateController@Authenticate')->name('autenticacion de usuario');
+
+Route::get('roles','Configuracion\RoleController@index')->name('listar roles');
+
 //crearcion de un gropo de rutas para el roll de store 
 //Route::middleware(['auth'])->group(function(){
-	
+/*	
 	//Roles
 	
 	//crear roles
@@ -120,3 +126,4 @@ Route::post('users','Pellizary\UserController@store')->name('agregarusuarios');
 Route::get('users/{id}','Pellizary\UserController@edit')->name('consultausuariosid');
 Route::put('users/{id}','Pellizary\UserController@update')->name('atualizacionusuarios');
 Route::delete('users/{id}','Pellizary\UserController@borrar')->name('borrarusuarios');
+*/

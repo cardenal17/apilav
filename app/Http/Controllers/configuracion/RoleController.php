@@ -36,7 +36,8 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $result=$this->servicio->store();
+        return $result;
     }
 
     /**
@@ -47,7 +48,8 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        //
+        $result=$this->servicio->show();
+        return $result;
     }
 
     /**
@@ -59,7 +61,8 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $result=$this->servicio->update();
+        return $result;
     }
 
     /**
@@ -70,6 +73,7 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $result=$this->servicio->destroy();
+        return $result;
     }
 }

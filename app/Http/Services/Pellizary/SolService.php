@@ -24,17 +24,11 @@ class SolService
      */
     public function index(Request $request)
     {
-
         
-
         $this->soldaduras=DB::table($this->table)
        ->where('estatus','=','true')->get();   
-        
-
 
         return response()->json($this->soldaduras);
-
-
 
     }
 
@@ -59,9 +53,8 @@ class SolService
      */
     public function update($request,$id){
         $soldaduras=Soldadura::find($id);
-
-      $soldaduras->fill($request->all())
-      ->save();
+        $soldaduras->fill($request->all())
+        ->save();
     }
 
     /**
