@@ -14,10 +14,16 @@ use Illuminate\Http\Request;
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+	return $request->user();
 });
 
+Route::middleware('auth:api')->get('/', function (Request $request) {
+	Route::post('soldaduras','Pellizary\SoldaduraController@store')->name('agregarsoldaduras');
 
+
+
+
+});
 //ruta para identificar si el front tiene conexion con la api
 Route::get('/test', function (){
     return response()->json([
@@ -25,49 +31,46 @@ Route::get('/test', function (){
     ], 200);
 });
 
-Route::post('/login','Auth\LoginController@login');
-Route::post('/logout', ['middleware' => ['jwt.auth'], 'uses' => 'Tatuco\AuthController@logout', 'as' => 'logout']);
-Route::get('/validate', ['middleware' => ['jwt.auth'], 'uses' => 'Tatuco\AuthController@validate', 'as' => 'validate']);
-
 //crearcion de un gropo de rutas para el roll de store 
 //Route::middleware(['auth'])->group(function(){
-  //Roles
-
+	
+	//Roles
+	
 	//crear roles
-	Route::post('roles/store','RoleController@store')->name('roles.store')
-	->middleware('Permission:roles.create');//el midelware buscara en el archivo kernel.php 
+	Route::post('roles/store','Configuracion\RoleController@store')->name('roles.store');
+	//->middleware('Permission:roles.create');//el midelware buscara en el archivo kernel.php 
 	//si exite permission y la ejecutara 
 
    //listar roles
-   Route::get('roles','RoleController@index')->name('roles.index')
-	->middleware('Permission:roles.index');
+   Route::get('roles','Configuracion\RoleController@index')->name('roles.index');
+	//->middleware('Permission:roles.index');
 
    //ver el formulario de creacion
-	Route::get('roles/create','RoleController@create')->name('roles.create')
-	->middleware('Permission:roles.create');
+	Route::get('roles/create','Configuracion\RoleController@create')->name('roles.create');
+	//->middleware('Permission:roles.create');
     
    //actualizar los roles 
-	Route::put('roles/{role}','RoleController@update')->name('roles.update')
-	->middleware('Permission:roles.edit');
+	Route::put('roles/{role}','Configuracion\RoleController@update')->name('roles.update');
+	//->middleware('Permission:roles.edit');
 
   //ver detalle de los roles 
-	Route::get('roles/{role}','RoleController@show')->name('roles.show')
-	->middleware('Permission:roles.show');
+	Route::get('roles/{role}','Configuracion\RoleController@show')->name('roles.show');
+	//->middleware('Permission:roles.show');
   
   //eliminar roles registrados 
-	Route::delete('roles/{role}','RoleController@destroy')->name('roles.destroy')
-	->middleware('Permission:roles.destroy');
+	Route::delete('roles/{role}','Configuracion\RoleController@destroy')->name('roles.destroy');
+	//->middleware('Permission:roles.destroy');
 
   // ver formulario de edicion 
-	Route::get('role/{role}/edit','RoleController@edit')->name('roles.edit')
-	->middleware('permission::roles.edit');
+	Route::get('role/{role}/edit','RoleController@edit')->name('roles.edit');
+	//->middleware('permission::roles.edit');
 
 //});
 
 // rutas de inspeccion de soldadura 
-
 Route::get('soldaduras','Pellizary\SoldaduraController@getsol')->name('consultasoldaduras');
-Route::post('soldaduras','Pellizary\SoldaduraController@store')->name('agregarsoldaduras');
+	//->middleware('permision:soldaduras.show');
+
 Route::get('soldaduras/{id}','Pellizary\SoldaduraController@edit')->name('consultasoldadurasid');
 Route::put('soldaduras/{id}','Pellizary\SoldaduraController@update')->name('atualizacionsoldaduras');
 Route::delete('soldaduras/{id}','Pellizary\SoldaduraController@borrar')->name('borrarsoldadura');
